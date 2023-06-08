@@ -1,0 +1,68 @@
+public class SopaLetras {
+    public static void main(String[] args) {
+        String[] sopaLetras = new String[] {"SOL", "UNO", "NUT"};
+        String palabra = "SOL";
+        Integer longitud = palabra.length();
+        System.debug(palabra.substring(0, 1));
+
+        List<Integer> posiciones = new List<Integer>();
+        String letraActual = "";
+
+        Boolean horizontal = false;
+        Boolean vertical = false;
+
+        List<Integer> encontrarLetra(String letraBuscada, List<String> sopaLetras) {
+            List<Integer> posiciones = new List<Integer>();
+
+            for (Integer i = 0; i < sopaLetras.size(); i++) {
+                String fila = sopaLetras[i];
+                for (Integer j = 0; j < fila.length(); j++) {
+                    letraActual = fila.substring(j, j + 1);
+                    if (letraActual.equals(letraBuscada)) {
+                        posiciones = new List<Integer>{i, j};
+                        break;
+                    }
+                }
+                if (letraActual.equals(letraBuscada)) {
+                    break;
+                }
+            }
+
+            return posiciones;
+        }
+
+        List<Integer> posicionesLetra = encontrarLetra("N", sopaLetras);
+        System.debug(posicionesLetra);
+
+        for (Integer letra = 0; letra < longitud - 1; letra++) {
+            posiciones = encontrarLetra(palabra.substring(letra, letra + 1), sopaLetras);
+            if (palabra.substring(letra + 1, letra + 2).equals(sopaLetras[posiciones[0] + 1].substring(posiciones[1], posiciones[1] + 1))) {
+                System.debug('La palabra es vertical');
+                vertical = true;
+            } else if (palabra.substring(letra + 1, letra + 2).equals(sopaLetras[posiciones[0]].substring(posiciones[1] + 1, posiciones[1] + 2))) {
+                System.debug('La palabra es horizontal');
+                horizontal = true;
+            } else {
+                System.debug('La palabra no está');
+                horizontal = false;
+                vertical = false;
+            }
+        }
+
+        if (vertical) {
+            posicionesLetra = encontrarLetra(palabra.substring(0, 1), sopaLetras);
+            System.debug('La letra ' + palabra.substring(0, 1) + ' está en la posición ' + posicionesLetra);
+            for (Integer i = 1; i < longitud; i++) {
+                System.debug('La letra ' + palabra.substring(i, i + 1) + ' está en la posición [' + posicionesLetra[0] + ',' + (posicionesLetra[1] + i) + ']');
+            }
+        }
+
+        if (horizontal) {
+            posicionesLetra = encontrarLetra(palabra.substring(0, 1), sopaLetras);
+            System.debug('La letra ' + palabra.substring(0, 1) + ' está en la posición ' + posicionesLetra);
+            for (Integer i = 1; i < longitud; i++) {
+                System.debug('La letra ' + palabra.substring(i, i + 1) + ' está en la posición [' + (posicionesLetra[0] + i) + ',' + posicionesLetra[1] + ']');
+            }
+        }
+    }
+}

@@ -1,0 +1,58 @@
+public class Juego {
+    public Integer jugar() {
+        Integer dado = 0;
+        System.debug('Actualmente estás en la posición ' + dado);
+
+        Integer posicionActual = 0;
+        List<Integer> posiciones = new List<Integer>();
+        for (Integer p = 1; p <= 25; p++) {
+            posiciones.add(p);
+        }
+        System.debug(posiciones);
+
+        List<Integer> escaleras = new List<Integer>{3, 6, 9, 10};
+        List<Integer> serpientes = new List<Integer>{14, 19, 22, 24};
+
+        while (posicionActual < 25) {
+            String tirarDado = 'A';
+            if (!tirarDado.equals('A')) {
+                while (!tirarDado.equals('A')) {
+                    tirarDado = 'A;
+                    dado = Math.mod(Math.abs(Math.round(Math.random() * 100)), 6) + 1;
+                }
+                System.debug('Tu dado ha arrojado ' + dado);
+                posicionActual += dado;
+            } else {
+                dado = Math.mod(Math.abs(Math.round(Math.random() * 100)), 6) + 1;
+                System.debug('Tu dado ha arrojado ' + dado);
+                posicionActual += dado;
+            }
+            if (escaleras.contains(posicionActual)) {
+                if (posicionActual == 3) {
+                    posicionActual = 11;
+                } else if (posicionActual == 6) {
+                    posicionActual = 17;
+                } else if (posicionActual == 9) {
+                    posicionActual = 18;
+                } else {
+                    posicionActual = 12;
+                }
+                System.debug('Avanzas a la posición ' + posicionActual);
+            } else if (serpientes.contains(posicionActual)) {
+                if (posicionActual == 14) {
+                    posicionActual = 4;
+                } else if (posicionActual == 19) {
+                    posicionActual = 8;
+                } else if (posicionActual == 22) {
+                    posicionActual = 20;
+                } else {
+                    posicionActual = 16;
+                }
+                System.debug('Desciendes a la posición ' + posicionActual);
+            } else {
+                System.debug('Tu nueva posición es ' + posicionActual);
+            }
+        }
+        return posicionActual;
+    }
+}
